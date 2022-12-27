@@ -1,5 +1,5 @@
 import { expect } from "@esm-bundle/chai";
-import { fixture } from '@open-wc/testing';
+import { fixture, oneEvent } from '@open-wc/testing';
 import { AdminTableElement } from "../src/sc-admin-table";
 import "../src/sc-admin-table";
 
@@ -26,6 +26,12 @@ describe('sc-admin-table', () => {
     await adminTable.updateComplete;
 
     expect(adminTable.shadowRoot.innerHTML).to.contain('<form>');
-    expect(adminTable.shadowRoot.querySelector('sl-input[name="foo"]')).to.exist;
+    const fooInput = adminTable.shadowRoot.querySelector('sl-input[name="foo"]') as HTMLInputElement;
+    fooInput.value = 'blarg';
+    const saveButton = adminTable.shadowRoot.querySelector('#save-button') as HTMLButtonElement;
+    // yikes async 'fun'
+    setTimeout(() => saveButton.click());
+    const { detail } = await oneEvent(adminTable, 'sc-save');
+    expect(detail.data.foo).to.equal('blarg');
   });
 });

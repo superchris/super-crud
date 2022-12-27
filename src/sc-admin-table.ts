@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit'
 import { customElement, property, state, query } from 'lit/decorators.js'
 import '@shoelace-style/shoelace';
+import { serialize } from '@shoelace-style/shoelace/dist/utilities/form.js';
 import shoelace_light from '@shoelace-style/shoelace/dist/themes/light.styles.js';
 
 type AdminTableConfig = {
@@ -13,7 +14,7 @@ type AdminTableConfig = {
 export class AdminTableElement extends LitElement {
 
   static styles = [shoelace_light];
-  
+
   @property()
   config: AdminTableConfig;
 
@@ -23,8 +24,16 @@ export class AdminTableElement extends LitElement {
   @query('sl-dialog#edit-dialog')
   editDialog: HTMLElement;
 
+  @query('sl-dialog#edit-dialog form')
+  form: HTMLFormElement;
+
   add() {
     (this.editDialog as any)?.show();
+  }
+
+  save() {
+    const data = serialize(this.form);
+    this.dispatchEvent(new CustomEvent('sc-save', {detail: { data } }));
   }
 
   render() {
@@ -51,6 +60,7 @@ export class AdminTableElement extends LitElement {
           ${this.config?.fields.map((field) => html`
           <sl-input name=${field.name} label=${field.label}></sl-input>
           `)}
+          <sl-button id="save-button" @click=${this.save}>Save</sl-button>
         </form>
       </sl-dialog>
     `;
