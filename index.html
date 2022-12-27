@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <script type="module" src="build/src/sc-admin-table.js"></script>
+  </head>
+
+  <body>
+    <sc-admin-table></sc-admin-table>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        const adminTable = document.querySelector('sc-admin-table');
+        adminTable.config = {
+          fields: [{name: 'foo', label: 'Foo'}, {name: 'bar', label: 'Barr'}]
+        }
+        adminTable.data = [{foo: 'The Foo', bar: 'Da Bar'}]
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "super-crud",
+  "version": "0.0.1",
+  "description": "A set of custom elements to build a CRUD admin front end",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "wds --node-resolve --open --watch",
+    "pretest": "tsc",
+    "test": "web-test-runner build/**/*.test.js --node-resolve"
+  },
+  "author": "Chris Nelson",
+  "license": "MIT",
+  "devDependencies": {
+    "@open-wc/testing": "^3.1.7",
+    "@web/dev-server": "^0.1.35",
+    "@web/test-runner": "^0.15.0",
+    "live-server": "^1.2.2",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@shoelace-style/shoelace": "^2.0.0-beta.87",
+    "lit": "^2.5.0"
+  }
+}
